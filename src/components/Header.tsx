@@ -19,13 +19,13 @@ export const Header = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/completed">
-                  Completed
+                <Link className="nav-link" to="/done">
+                  Done Movies
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link btn btn-secondary text-white" to="/search">
-                  Search Movie
+                  Search 
                 </Link>
               </li>
             </ul>
