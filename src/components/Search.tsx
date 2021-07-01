@@ -16,25 +16,25 @@ export const Search = () => {
 
         setQuery(e.target.value)
 
-        const fetchData = async () => {
-            try{
-                let res= await themoviedb.get(`https://api.themoviedb.org/3/search/movie?api_key=93f7555c4ae5c5b68bfc36852b46cfcd&language=en-US&page=1&include_adult=false&query=${e
-				.target.value}`)
-                  if(res.status == 200){
-                    
-                }      
-                return res.data 
-            }
-            catch(err){
-                console.error(err)
-            }
-          }
+        if (e.target.value === '') {
+            setResults([])
+        } else {
+            const fetchData = async () => {
+                try{
+                    let res= await themoviedb.get(`https://api.themoviedb.org/3/search/movie?api_key=93f7555c4ae5c5b68bfc36852b46cfcd&language=en-US&page=1&include_adult=false&query=${e
+                    .target.value}`)
+                      if(res.status == 200){
+                    }
+                    return res.data 
+                }
+                catch(err){
+                    console.error(err)
+                }
+              }
+              fetchData().then(res => setResults(res.results))
+        }
 
-          fetchData().then(res => setResults(res.results))
-
-        
 	};
-    
 
 	return (
 		<div className="row">
@@ -43,7 +43,7 @@ export const Search = () => {
                 <input className="form-control" type="text" placeholder="Search for a movie" value={query} onChange={onChange} />
 		    </div>
             <div className="col-lg-12 p-3">
-            {results ? results.length > 0 && (
+            {results.length > 0 && (
 						<div className="d-flex flex-wrap">
 							{results.map((movie:any) => (
 								<div key={movie.id} className="">
@@ -51,7 +51,7 @@ export const Search = () => {
 								</div>
 							))}
 						</div>
-					):<p>No hay resultados</p>}
+					)}
             </div>
         </div>
 	);

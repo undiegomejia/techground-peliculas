@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Context } from '../contexts/Context';
 
-export const SearchCard = ({movie}:any) => {
+export const SearchCard = ({ movie }: any) => {
+  const {} = useContext(Context);
+
     return (
         <div className="card m-3 text-center">
       <div className="card-header">
@@ -24,7 +27,7 @@ export const SearchCard = ({movie}:any) => {
 
           <button
             className="btn btn-success"
-          >Doned! <span role="img">😎</span>
+          >Done! <span role="img">😎</span>
           </button>
         </div>
     </div>
