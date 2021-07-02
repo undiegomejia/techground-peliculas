@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { Context } from '../contexts/Context';
+import { AppContext } from '../contexts/Context';
 
 import { MovieCard } from "./MovieCard";
 
+
 export const WishList = () => {
-  const { wishlist } = useContext(Context);
+  const { wishlist } = useContext(AppContext);
 
     return (
         <div className="row">
@@ -12,17 +13,18 @@ export const WishList = () => {
           <h3>Movie Wish List</h3>
         </div>
         {wishlist.length} {wishlist.length === 1 ? "Movie" : "Movies"}
-        <div>
+
         {wishlist.length > 0 ? (
-          <div className="movie-grid">
+          <div className="row">
             {wishlist.map((movie:any) => (
-              <MovieCard movie={movie} key={movie.id} type="watchlist" />
+              <div key={movie.tile} className="col-xl-2 col-lg-3 col-md-4 col-sm-4 p-1 text-center">
+                <MovieCard movie={movie} key={movie.id} type="wishlist" />
+              </div>
             ))}
           </div>
         ) : (
-          <h2 className="no-movies">No movies in your list! Add some!</h2>
+          <h2>No movies here <span role="img">😥</span></h2>
         )}
-        </div>
       </div>
     )
 }

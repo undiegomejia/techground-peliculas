@@ -1,8 +1,24 @@
 import React, { useContext } from 'react'
-import { Context } from '../contexts/Context';
+import { AppContext } from '../contexts/Context';
 
-export const SearchCard = ({ movie }: any) => {
-  const {} = useContext(Context);
+import {Movie} from '../types/Types'
+
+
+export const SearchCard = ({movie}:Movie ) => {
+  const {addMovie, wishlist} = useContext(AppContext);
+
+  
+  let onList = wishlist.find((o:any)=>o.id === movie.id) 
+
+  const disableListButton = onList ? true : false
+
+  const add = ()=>{
+    if(addMovie){
+      addMovie(movie) 
+    }else{
+      return
+    }
+  }
 
     return (
         <div className="card m-3 text-center">
@@ -22,6 +38,8 @@ export const SearchCard = ({ movie }: any) => {
         <div className="btn-group" role="group" aria-label="Basic checkbox toggle button group">
           <button
             className="btn btn-info"
+            disabled={disableListButton}
+            onClick={()=>add()}
           >Watch Later <span role="img">⌚</span>
           </button>
 

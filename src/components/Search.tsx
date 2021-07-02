@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import themoviedb from '../api/themoviedb';
-
-import axios from 'axios'
+import React, {useEffect, useState } from 'react';
 
 import { SearchCard } from './SearchCard';
 
-
 export const Search = () => {
 
-	const [ query, setQuery ] = useState('');
-	const [ results, setResults ] = useState([]);
+	const [ query, setQuery ] = useState<string>('');
+	const [ results, setResults ] = useState<[]>([]);
+
+    useEffect(() => {
+       
+    }, [query])
 
 	const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault();
@@ -21,14 +21,15 @@ export const Search = () => {
         } else {
             const fetchData = async () => {
                 try{
-                    let res= await themoviedb.get(`https://api.themoviedb.org/3/search/movie?api_key=93f7555c4ae5c5b68bfc36852b46cfcd&language=en-US&page=1&include_adult=false&query=${e
+                    let res= await fetch(`https://api.themoviedb.org/3/search/movie?api_key=93f7555c4ae5c5b68bfc36852b46cfcd&language=en-US&page=1&include_adult=false&query=${e
                     .target.value}`)
-                      if(res.status == 200){
+                      if(res.status === 200){
+                        //   console.log(res.data)
                     }
-                    return res.data 
+                    return res.json();
                 }
                 catch(err){
-                    console.error(err)
+                    // console.error(err)
                 }
               }
               fetchData().then(res => setResults(res.results))

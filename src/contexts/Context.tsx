@@ -1,22 +1,15 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import { Reducer } from "./Reducer";
 
-type Props = {
-    children?: React.ReactNode;
-};
+import {State, Props} from '../types/Types'
 
-interface Actions {
-  wishlist: any,
-  addToWish():()=>void,
-}
-
-const initialState = {
+const initialState:State = {
     wishlist: localStorage.getItem("wishlist")
-      ? JSON.parse(localStorage.getItem("wishlist") ?? '')
-      : []
+    ? JSON.parse(localStorage.getItem("wishlist") || '{}')
+    : []
   };
 
-export const Context = createContext(initialState);
+export const AppContext = createContext(initialState);
 
 export const ContextProvider = ({ children }:Props) => {
   const [state, dispatch] = useReducer(Reducer, initialState)
@@ -25,17 +18,23 @@ export const ContextProvider = ({ children }:Props) => {
     localStorage.setItem("wishlist", JSON.stringify(state.wishlist));
   }, [state]);
 
-  const addToWish = (movie:any) => {
+  const addMovie = (movie:{}) => {
     dispatch({ type: "ADD_TO_WISHLIST", payload: movie });
   };
 
+  const removeMovie = (id:any) => {
+    dispatch({ type: "REMOVE_FROM_LIST", payload: id });
+  };
+
   return (
-    <Context.Provider
+    <AppContext.Provider
       value={{
-        wishlist: state.wishlist
+        wishlist: state.wishlist,
+        addMovie,
+        removeMovie
       }}
     >
       {children}
-    </Context.Provider>
+    </AppContext.Provider>
   );
  }
