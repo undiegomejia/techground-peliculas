@@ -6,6 +6,9 @@ import {State, Props} from '../types/Types'
 const initialState:State = {
     wishlist: localStorage.getItem("wishlist")
     ? JSON.parse(localStorage.getItem("wishlist") || '{}')
+    : [],
+    done: localStorage.getItem("done")
+    ? JSON.parse(localStorage.getItem("done") || '{}')
     : []
   };
 
@@ -16,6 +19,7 @@ export const ContextProvider = ({ children }:Props) => {
 
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(state.wishlist));
+    localStorage.setItem("done", JSON.stringify(state.wishlist));
   }, [state]);
 
   const addMovie = (movie:{}) => {
@@ -26,12 +30,29 @@ export const ContextProvider = ({ children }:Props) => {
     dispatch({ type: "REMOVE_FROM_LIST", payload: id });
   };
 
+  const addToDone = (movie:{}) => {
+    dispatch({ type: "ADD_TO_DONE", payload: movie });
+  };
+
+  const moveToWishlist = (movie:{}) => {
+    dispatch({ type: "MOVE_TO_WISHLIST", payload: movie });
+  };
+
+  const removeFromDone = (id:any) => {
+    dispatch({ type: "REMOVE_FROM_DONE", payload: id });
+  };
+
   return (
     <AppContext.Provider
       value={{
+        done: state.done,
         wishlist: state.wishlist,
+        addToDone,
         addMovie,
-        removeMovie
+        removeMovie,
+        moveToWishlist,
+        removeFromDone
+
       }}
     >
       {children}

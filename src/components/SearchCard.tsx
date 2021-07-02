@@ -5,16 +5,27 @@ import {Movie} from '../types/Types'
 
 
 export const SearchCard = ({movie}:Movie ) => {
-  const {addMovie, wishlist} = useContext(AppContext);
+  const {addMovie, wishlist, addToDone, done} = useContext(AppContext);
 
-  
-  let onList = wishlist.find((o:any)=>o.id === movie.id) 
 
-  const disableListButton = onList ? true : false
+  let onList = wishlist.find((o: any) => o.id === movie.id)
+  let onDone = done.find((o:any)=>o.id === movie.id) 
+
+  const listDisable = onList ? true : false
+
+  const doneDisable = onDone ? true : false
 
   const add = ()=>{
     if(addMovie){
       addMovie(movie) 
+    }else{
+      return
+    }
+  }
+
+  const addDone = ()=>{
+    if(addToDone){
+      addToDone(movie) 
     }else{
       return
     }
@@ -38,13 +49,15 @@ export const SearchCard = ({movie}:Movie ) => {
         <div className="btn-group" role="group" aria-label="Basic checkbox toggle button group">
           <button
             className="btn btn-info"
-            disabled={disableListButton}
+            disabled={listDisable}
             onClick={()=>add()}
           >Watch Later <span role="img">⌚</span>
           </button>
 
           <button
             className="btn btn-success"
+            disabled={doneDisable}
+            onClick={()=>addDone()}
           >Done! <span role="img">😎</span>
           </button>
         </div>

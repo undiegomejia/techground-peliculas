@@ -1,31 +1,54 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../contexts/Context';
 
-export const Controls = ({movie, type}:any) => {
-    const {addMovie, removeMovie} = useContext(AppContext);
+export const Controls = ({ movie, type }: any) => {
+  const {
+    moveToWishlist,
+    removeMovie,
+    addToDone,
+    removeFromDone
+  } = useContext(AppContext);
 
-    const add = ()=>{
-        if(addMovie){
-          addMovie(movie) 
-        }else{
-          return
-        }
-      }
+  const add = () => {
+    if (moveToWishlist) {
+      moveToWishlist(movie)
+    } else {
+      return
+    }
+  }
 
-      const remove = (id:any)=>{
-        if(removeMovie){
-            removeMovie(id) 
-        }else{
-          return
-        }
-      }
+  const remove = (id: any) => {
+    if (removeMovie) {
+      removeMovie(id)
+    } else {
+      return
+    }
+  }
+  
+  const addDone = () => {
+    if (addToDone) {
+      addToDone(movie)
+    } else {
+      return
+    }
+  }
 
-    return (
-        <div className="row">
-            {type === "wishlist" && (
+  const removeDone = (id: any) => {
+    if (removeFromDone) {
+      removeFromDone(id)
+    } else {
+      return
+    }
+  }
+
+  
+
+  return (
+    <div className="row">
+      {type === "wishlist" && (
         <>
-          <button className="btn" onClick={() => add()}>
-            Add Movie
+          <button className="btn" onClick={() => addDone()}>
+            Add to Done
           </button>
 
           <button
@@ -36,6 +59,21 @@ export const Controls = ({movie, type}:any) => {
           </button>
         </>
       )}
-        </div>
-    )
-}
+
+{type === "done" && (
+        <>
+          <button className="btn" onClick={() => add()}>
+            Add to WishList
+          </button>
+
+          <button
+            className="btn"
+            onClick={() => removeDone(movie.id)}
+          >
+            Remove Movie
+          </button>
+        </>
+      )}
+    </div>
+  );
+};

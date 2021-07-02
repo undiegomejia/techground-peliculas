@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootswatch/dist/darkly/bootstrap.min.css";
+
 import { Header } from './components/Header';
 import { Search } from './components/Search';
 import { WishList } from './components/WishList';

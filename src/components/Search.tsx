@@ -8,7 +8,7 @@ export const Search = () => {
 	const [ results, setResults ] = useState<[]>([]);
 
     useEffect(() => {
-       
+
     }, [query])
 
 	const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
